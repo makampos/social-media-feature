@@ -1,5 +1,3 @@
-from http.client import responses
-
 import pytest
 from httpx import AsyncClient
 
@@ -29,7 +27,7 @@ async def test_create_post(async_client: AsyncClient):
         json={"body": body},
     )
     assert response.status_code == 201
-    assert {"id": 0, "body": "Test Post"}.items() <= response.json().items()
+    assert {"id": 1, "body": "Test Post"}.items() <= response.json().items()
 
 
 @pytest.mark.anyio
@@ -51,7 +49,7 @@ async def test_create_comment(async_client: AsyncClient, created_post: dict):
         json={"body": "Test Comment", "post_id": created_post["id"]},
     )
     assert response.status_code == 201
-    assert {"id": 0, "body": "Test Comment", "post_id": created_post["id"]}.items() <= response.json().items()
+    assert {"id": 1, "body": "Test Comment", "post_id": created_post["id"]}.items() <= response.json().items()
 
 @pytest.mark.anyio
 async def test_get_comments_on_post(async_client: AsyncClient, created_post: dict, created_comment: dict):
